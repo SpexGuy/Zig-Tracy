@@ -1,4 +1,5 @@
 const std = @import("std");
+const builtin = @import("builtin");
 const Src = std.builtin.SourceLocation;
 
 // check for a decl named tracy_enabled in root or build_options
@@ -10,7 +11,7 @@ pub const enabled = blk: {
     if (@hasDecl(root, "tracy_enabled")) {
         root_enable = @as(bool, root.tracy_enabled);
     }
-    if (!std.builtin.is_test) {
+    if (!builtin.is_test) {
         // Don't try to include build_options in tests.
         // Otherwise `zig test` doesn't work.
         const options = @import("build_options");
