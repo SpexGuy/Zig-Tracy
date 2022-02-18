@@ -362,7 +362,7 @@ const tracy_full = struct {
             c.___tracy_emit_memory_alloc(ptr, size, 0);
         }
     }
-    pub inline fn Free(ptr: ?*const anyopaque) void {
+    pub inline fn Free(ptr: ?*const anyopaque, size: usize) void {
         if (has_callstack_support) {
             c.___tracy_emit_memory_free_callstack(ptr, callstack_enabled, 0);
         } else {
@@ -376,7 +376,7 @@ const tracy_full = struct {
             c.___tracy_emit_memory_alloc(ptr, size, 1);
         }
     }
-    pub inline fn SecureFree(ptr: ?*const anyopaque) void {
+    pub inline fn SecureFree(ptr: ?*const anyopaque, size: usize) void {
         if (has_callstack_support) {
             c.___tracy_emit_memory_free_callstack(ptr, callstack_enabled, 1);
         } else {
@@ -472,7 +472,7 @@ const tracy_full = struct {
     pub inline fn Message(text: []const u8) void {
         c.___tracy_emit_message(text.ptr, text.len, callstack_enabled);
     }
-    pub inline fn MessageL(text: [*:0]const u8) void {
+    pub inline fn MessageL(text: [*:0]const u8, color: u32) void {
         c.___tracy_emit_messageL(text, color, callstack_enabled);
     }
     pub inline fn MessageC(text: []const u8, color: u32) void {
