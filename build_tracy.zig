@@ -3,7 +3,6 @@ const Builder = std.build.Builder;
 const LibExeObjStep = std.build.LibExeObjStep;
 
 pub fn link(step: *LibExeObjStep, opt_path: ?[]const u8) void {
-    step.addBuildOption(bool, "tracy_enabled", opt_path != null);
     if (opt_path) |path| {
         step.addIncludeDir(path);
         const tracy_client_source_path = std.fs.path.join(step.builder.allocator, &.{path, "TracyClient.cpp"})
