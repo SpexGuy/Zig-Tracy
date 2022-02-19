@@ -31,7 +31,7 @@ pub const enabled = blk: {
 
 const debug_verify_stack_order = false;
 
-usingnamespace if (enabled) tracy_full else tracy_stub;
+pub usingnamespace if (enabled) tracy_full else tracy_stub;
 
 const tracy_stub = struct {
     pub const ZoneCtx = struct {
@@ -44,7 +44,7 @@ const tracy_stub = struct {
             _ = name;
         }
         pub inline fn Value(self: ZoneCtx, value: u64) void {
-            _ = self; 
+            _ = self;
             _ = value;
         }
         pub inline fn End(self: ZoneCtx) void {
@@ -52,64 +52,64 @@ const tracy_stub = struct {
         }
     };
 
-    pub inline fn InitThread() void { }
-    pub inline fn SetThreadName(name: [*:0]const u8) void { 
+    pub inline fn InitThread() void {}
+    pub inline fn SetThreadName(name: [*:0]const u8) void {
         _ = name;
     }
-    
-    pub inline fn Zone(comptime src: Src) ZoneCtx { 
+
+    pub inline fn Zone(comptime src: Src) ZoneCtx {
         _ = src;
-        return .{}; 
+        return .{};
     }
-    pub inline fn ZoneN(comptime src: Src, name: [*:0]const u8) ZoneCtx { 
-        _ = src; 
-        _ = name;
-        return .{}; 
-    }
-    pub inline fn ZoneC(comptime src: Src, color: u32) ZoneCtx { 
-        _ = src; 
-        _ = color;
-        return .{}; 
-    }
-    pub inline fn ZoneNC(comptime src: Src, name: [*:0]const u8, color: u32) ZoneCtx { 
+    pub inline fn ZoneN(comptime src: Src, name: [*:0]const u8) ZoneCtx {
         _ = src;
         _ = name;
-        _ = color;
-        return .{}; 
+        return .{};
     }
-    pub inline fn ZoneS(comptime src: Src, depth: i32) ZoneCtx { 
-        _ = src;
-        _ = depth;
-        return .{}; 
-    }
-    pub inline fn ZoneNS(comptime src: Src, name: [*:0]const u8, depth: i32) ZoneCtx { 
-        _ = src;
-        _ = name;
-        _ = depth;
-        return .{}; 
-    }
-    pub inline fn ZoneCS(comptime src: Src, color: u32, depth: i32) ZoneCtx { 
+    pub inline fn ZoneC(comptime src: Src, color: u32) ZoneCtx {
         _ = src;
         _ = color;
-        _ = depth;
-        return .{}; 
+        return .{};
     }
-    pub inline fn ZoneNCS(comptime src: Src, name: [*:0]const u8, color: u32, depth: i32) ZoneCtx { 
+    pub inline fn ZoneNC(comptime src: Src, name: [*:0]const u8, color: u32) ZoneCtx {
         _ = src;
         _ = name;
         _ = color;
+        return .{};
+    }
+    pub inline fn ZoneS(comptime src: Src, depth: i32) ZoneCtx {
+        _ = src;
         _ = depth;
-        return .{}; 
+        return .{};
+    }
+    pub inline fn ZoneNS(comptime src: Src, name: [*:0]const u8, depth: i32) ZoneCtx {
+        _ = src;
+        _ = name;
+        _ = depth;
+        return .{};
+    }
+    pub inline fn ZoneCS(comptime src: Src, color: u32, depth: i32) ZoneCtx {
+        _ = src;
+        _ = color;
+        _ = depth;
+        return .{};
+    }
+    pub inline fn ZoneNCS(comptime src: Src, name: [*:0]const u8, color: u32, depth: i32) ZoneCtx {
+        _ = src;
+        _ = name;
+        _ = color;
+        _ = depth;
+        return .{};
     }
 
     pub inline fn Alloc(ptr: ?*const anyopaque, size: usize) void {
-        _ = ptr; 
+        _ = ptr;
         _ = size;
     }
-    pub inline fn Free(ptr: ?*const anyopaque) void { 
+    pub inline fn Free(ptr: ?*const anyopaque) void {
         _ = ptr;
     }
-    pub inline fn SecureAlloc(ptr: ?*const anyopaque, size: usize) void { 
+    pub inline fn SecureAlloc(ptr: ?*const anyopaque, size: usize) void {
         _ = ptr;
         _ = size;
     }
@@ -146,7 +146,7 @@ const tracy_stub = struct {
     }
     pub inline fn SecureAllocN(ptr: ?*const anyopaque, size: usize, name: [*:0]const u8) void {
         _ = ptr;
-        _ = size; 
+        _ = size;
         _ = name;
     }
     pub inline fn SecureFreeN(ptr: ?*const anyopaque, name: [*:0]const u8) void {
@@ -155,7 +155,7 @@ const tracy_stub = struct {
     }
     pub inline fn AllocNS(ptr: ?*const anyopaque, size: usize, depth: c_int, name: [*:0]const u8) void {
         _ = ptr;
-        _ = size; 
+        _ = size;
         _ = depth;
         _ = name;
     }
@@ -209,7 +209,7 @@ const tracy_stub = struct {
         _ = depth;
     }
 
-    pub inline fn FrameMark() void { }
+    pub inline fn FrameMark() void {}
     pub inline fn FrameMarkNamed(name: [*:0]const u8) void {
         _ = name;
     }
@@ -219,7 +219,7 @@ const tracy_stub = struct {
     pub inline fn FrameMarkEnd(name: [*:0]const u8) void {
         _ = name;
     }
-    pub inline fn FrameImage(image: ?*const anyopaque, width: u16, height: u16, offset: u8, flip: c_int) void { 
+    pub inline fn FrameImage(image: ?*const anyopaque, width: u16, height: u16, offset: u8, flip: c_int) void {
         _ = image;
         _ = width;
         _ = height;
@@ -262,7 +262,7 @@ const tracy_full = struct {
         pub inline fn Text(self: ZoneCtx, text: []const u8) void {
             if (debug_verify_stack_order) {
                 if (stack_depth != self._token) {
-                    std.debug.panic("Error: expected Value() at stack depth {} but was {}\n", .{self._token, stack_depth});
+                    std.debug.panic("Error: expected Value() at stack depth {} but was {}\n", .{ self._token, stack_depth });
                 }
             }
             c.___tracy_emit_zone_text(self._zone, text.ptr, text.len);
@@ -270,7 +270,7 @@ const tracy_full = struct {
         pub inline fn Name(self: ZoneCtx, name: []const u8) void {
             if (debug_verify_stack_order) {
                 if (stack_depth != self._token) {
-                    std.debug.panic("Error: expected Value() at stack depth {} but was {}\n", .{self._token, stack_depth});
+                    std.debug.panic("Error: expected Value() at stack depth {} but was {}\n", .{ self._token, stack_depth });
                 }
             }
             c.___tracy_emit_zone_name(self._zone, name.ptr, name.len);
@@ -278,7 +278,7 @@ const tracy_full = struct {
         pub inline fn Value(self: ZoneCtx, val: u64) void {
             if (debug_verify_stack_order) {
                 if (stack_depth != self._token) {
-                    std.debug.panic("Error: expected Value() at stack depth {} but was {}\n", .{self._token, stack_depth});
+                    std.debug.panic("Error: expected Value() at stack depth {} but was {}\n", .{ self._token, stack_depth });
                 }
             }
             c.___tracy_emit_zone_value(self._zone, val);
@@ -286,7 +286,7 @@ const tracy_full = struct {
         pub inline fn End(self: ZoneCtx) void {
             if (debug_verify_stack_order) {
                 if (stack_depth != self._token) {
-                    std.debug.panic("Error: expected End() at stack depth {} but was {}\n", .{self._token, stack_depth});
+                    std.debug.panic("Error: expected End() at stack depth {} but was {}\n", .{ self._token, stack_depth });
                 }
                 stack_depth -= 1;
             }
